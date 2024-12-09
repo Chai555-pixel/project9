@@ -1,7 +1,7 @@
 # todo/views.py
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from .models import Task
@@ -42,4 +42,13 @@ class TaskUpdate(UpdateView):
 
     def form_valid(self, form):
         messages.success(self.request, "The task was updated successfully.")  # Flash message on success
+        return super().form_valid(form)
+    
+class TaskDelete(DeleteView):
+    model = Task  # The model to delete (Task)
+    context_object_name = 'task'  # Name of the object passed to the template
+    success_url = reverse_lazy('tasks')  # Redirect to task list after deletion
+
+    def form_valid(self, form):
+        messages.success(self.request, "The task was deleted successfully.")
         return super().form_valid(form)

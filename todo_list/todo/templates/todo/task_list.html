@@ -1,4 +1,4 @@
-<!-- todo/templates/todo/task_list.html -->
+<!-- templates/todo/task_list.html -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -10,8 +10,9 @@
         <li>
             <a href="{% url 'task' task.id %}" class="{% if task.completed %}completed{% endif %}">{{ task.title }}</a>
             <div class="task-controls">
-                <a href="#"><i class="bi bi-trash"></i></a>  <!-- Placeholder for Delete -->
-                <a href="{% url 'task-update' task.id %}"><i class="bi bi-pencil-square"></i></a>  <!-- Edit link -->
+                <!-- Add delete link with a trash icon -->
+                <a href="{% url 'task-delete' task.id %}"><i class="bi bi-trash"></i> Delete</a>
+                <a href="{% url 'task-update' task.id %}"><i class="bi bi-pencil-square"></i> Edit</a>
             </div>
         </li>
         {% endfor %}
