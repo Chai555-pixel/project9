@@ -1,7 +1,7 @@
 # todo/views.py
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from .models import Task
@@ -34,3 +34,12 @@ class TaskCreate(CreateView):
         form.instance.user = self.request.user  # Set the user to the logged-in user
         messages.success(self.request, "The task was created successfully.")  # Flash message
         return super().form_valid(form)  # Proceed with form validation and save
+
+class TaskUpdate(UpdateView):
+    model = Task
+    fields = ['title', 'description', 'completed']  # Fields to display in the form
+    success_url = reverse_lazy('tasks')  # Redirect to task list after successful update
+
+    def form_valid(self, form):
+        messages.success(self.request, "The task was updated successfully.")  # Flash message on success
+        return super().form_valid(form)
